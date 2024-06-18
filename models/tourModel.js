@@ -44,6 +44,10 @@ const tourSchema = mongoose.Schema({
         type: String,
         trim: true
     },
+    secretTour: {
+        type: Boolean,
+        default: false
+    },
     imageCover: {
         type: String,
         required: [true, 'A tour must have a cover image']
@@ -81,6 +85,13 @@ tourSchema.pre('save', function (next)
 //     console.log(doc);
 //     next();
 // });
+
+// Query Middleware
+tourSchema.pre(/^find/, function (next)
+{
+    this.find({ secretTour: { $ne: true } });
+    next();
+});
 
 const Tour = mongoose.model('Tour', tourSchema);
 
