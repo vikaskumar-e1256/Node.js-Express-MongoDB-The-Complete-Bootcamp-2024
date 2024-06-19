@@ -36,16 +36,17 @@ class APIFeatures
 
     limitFields()
     {
-        if (this.queryParams.fields)
+        if (this.queryParams && this.queryParams.fields)
         {
-            const selectFields = this.queryParams.fields.split(',').join(' ');
-            this.query = this.query.select(selectFields);
+            let fields = this.queryParams.fields.split(',').join(' ');
+            this.query = this.query.select(fields);
         } else
         {
             this.query = this.query.select('-__v'); // - means we are excluding __v from the response
         }
         return this; // Entire Object
     }
+
 
     paginate()
     {
