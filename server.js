@@ -4,6 +4,12 @@ dotenv.config({ path: './config.env' });
 const app = require('./app');
 const mongoose = require('mongoose');
 
+process.on('uncaughtException', err =>
+{
+    console.log(err.name, err.message);
+    console.log('uncaughtException'); 
+    process.exit(1);
+});
 
 let db;
 if (process.env.NODE_ENV === 'production') {
@@ -30,4 +36,4 @@ process.on('unhandledRejection', err =>
     {
         process.exit(1);
     });
-})
+});
