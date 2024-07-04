@@ -34,6 +34,7 @@ exports.getAllTours = catchAsync(async (req, res, next) =>
 
 exports.createTour = catchAsync(async (req, res, next) =>
 {
+    console.log(req.body);
     const newTour = await Tour.create(req.body);
     res.status(201).json({
         status: 'success',
@@ -80,17 +81,19 @@ exports.updateTour = catchAsync(async (req, res, next) =>
 exports.deleteTour = catchAsync(async (req, res, next) =>
 {
     const id = req.params.id;
-    const tour = await Tour.findByIdAndDelete(id);
+    const tour = await Tour.findById(id);
 
-    if (!tour) {
+    if (!tour)
+    {
         return next(new AppError('Tour does not exist', 404));
     }
+
+    await tour.deleteOne();
 
     res.status(204).json({
         status: 'success',
         data: null
     });
-
 
 });
 
