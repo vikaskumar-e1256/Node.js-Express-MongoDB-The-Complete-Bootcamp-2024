@@ -46,7 +46,7 @@ const tourSchema = mongoose.Schema({
             validator: function (val)
             {
                 return val < this.price;
-            }, 
+            },
             message: 'Discount price should be less than regular price'
         }
     },
@@ -68,6 +68,31 @@ const tourSchema = mongoose.Schema({
         required: [true, 'A tour must have a cover image']
     },
     images: [String],
+    startLocation: {
+        // GeoJson
+        type: {
+            type: String,
+            default: 'Point',
+            enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String
+    },
+    locations: [
+        {
+        // GeoJson
+        type: {
+            type: String,
+            default: 'Point',
+            enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now()
