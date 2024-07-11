@@ -49,7 +49,10 @@ exports.getTour = catchAsync(async (req, res, next) =>
 {
     const id = req.params.id;
 
-    const tour = await Tour.findById(id);
+    const tour = await Tour.findById(id).populate({
+        path: 'guides',
+        select: '-__v -password -createdAt -updatedAt -isActive' // -means we don't want to show those fields
+    });
     if (!tour)
     {
         return next(new AppError('Tour does not exist', 404));
