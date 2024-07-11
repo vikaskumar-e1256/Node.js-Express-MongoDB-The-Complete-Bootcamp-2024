@@ -147,6 +147,15 @@ tourSchema.pre(/^find/, function (next)
     next();
 });
 
+tourSchema.pre(/^find/, function (next)
+{
+    this.populate({
+        path: 'guides',
+        select: '-__v -password -createdAt -updatedAt -isActive' // -means we don't want to show those fields
+    });
+    next();
+});
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
